@@ -1,11 +1,9 @@
 package com.example.blog.controllers;
 
-
-import com.example.blog.entities.Post;
 import com.example.blog.payloads.ApiResponse;
 import com.example.blog.payloads.PostDTO;
+import com.example.blog.payloads.PostResponse;
 import com.example.blog.services.PostService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,12 +47,12 @@ public class PostController {
 
     // get all posts
     @GetMapping("/posts")
-    public ResponseEntity<List<PostDTO>> getAllPost(
-            @RequestParam(value = "pageNumber", defaultValue = "1", required = false) Integer pageNumber,
+    public ResponseEntity<PostResponse> getAllPost(
+            @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
             @RequestParam(value = "pageSize", defaultValue = "3", required = false) Integer pageSize
     ) {
-        List<PostDTO> allPosts = this.postService.getAllPost(pageNumber, pageSize);
-        return new ResponseEntity<>(allPosts, HttpStatus.OK);
+        PostResponse postResponse = this.postService.getAllPost(pageNumber, pageSize);
+        return new ResponseEntity<>(postResponse, HttpStatus.OK);
     }
 
     // get post by postId
@@ -70,5 +68,4 @@ public class PostController {
         this.postService.deletePost(postId);
         return new ResponseEntity<ApiResponse>( new ApiResponse("Post deleted Successfully", true ), HttpStatus.OK);
     }
-
 }
