@@ -1,6 +1,7 @@
 package com.example.blog.services;
 
 import com.example.blog.payloads.CategoryDTO;
+import com.example.blog.payloads.CategoryResponse;
 
 import java.util.List;
 
@@ -14,5 +15,5 @@ public interface CategoryService {
 
     CategoryDTO getCategory(Integer categoryId);
 
-     List<CategoryDTO> getCategories();
+    CategoryResponse getCategories(Integer pageNumber, Integer pageSize);
 }

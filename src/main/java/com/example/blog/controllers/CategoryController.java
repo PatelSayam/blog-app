@@ -2,6 +2,7 @@ package com.example.blog.controllers;
 
 import com.example.blog.payloads.ApiResponse;
 import com.example.blog.payloads.CategoryDTO;
+import com.example.blog.payloads.CategoryResponse;
 import com.example.blog.services.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +42,11 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.getCategory(categoryId));
     }
 
-    @GetMapping("/")
-    public ResponseEntity<List<CategoryDTO>> getCategories() {
-        return ResponseEntity.ok(categoryService.getCategories());
+    @GetMapping
+    public ResponseEntity<CategoryResponse> getCategories(
+           @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
+           @RequestParam(value = "pageSize", defaultValue = "3", required = false) Integer pageSize) {
+        CategoryResponse categoryResponse = categoryService.getCategories(pageNumber, pageSize);
+        return new ResponseEntity<>(categoryResponse, HttpStatus.OK);
     }
 }
